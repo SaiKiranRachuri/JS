@@ -1,0 +1,42 @@
+* {
+  /* Resetting below on all elements */
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+  /* when this is disabled/enabled the width of your-name selector is inclusive/exclusive of  border and padding. */
+}
+
+body {
+  background-color: rgb(159, 228, 159);
+  font-family: Arial;
+  font-size: 20px;
+  /* margin: 10%; */
+  padding: 50px;
+}
+
+/* This font-family and font-size applies to all the content just instead for body and its elements is because these properties are inherited properties */
+h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  /* padding-bottom: 10px; */
+}
+
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.first {
+  color: rgb(9, 93, 93);
+}
+
+#your-name {
+  background-color: aquamarine;
+  border: 5px solid #990f0f;
+  width: 400px;
+  padding: 25px;
+}
+
+#image-source {
+  padding-bottom: 10px;
+}

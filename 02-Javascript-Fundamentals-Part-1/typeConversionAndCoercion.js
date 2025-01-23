@@ -11,7 +11,3 @@ console.log(typeof ("23" + "10" + 3));
 console.log(typeof ("23" ** "2"));
 
 console.log("10" - "4");
-
-testline
-xyz
-

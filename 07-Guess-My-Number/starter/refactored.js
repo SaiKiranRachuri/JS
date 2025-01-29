@@ -23,6 +23,9 @@ const updateBackgroundColor = function (color) {
 
 document.querySelector('.check').addEventListener('click', function () {
   let guess = Number(document.querySelector('.guess').value);
+  // guess can be:
+  // 0 : !0 = true
+  // Non - zero: !1 = false
 
   if (!guess) {
     displayMessage('⚠️ Not a Number');

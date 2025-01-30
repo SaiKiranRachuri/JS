@@ -1,6 +1,7 @@
 'use strict';
 
 const showModalButtonsList = document.querySelectorAll('.show-modal');
+// console.log(showModalButtonsList);
 const modalContent = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const closeButton = document.querySelector('.close-modal');
@@ -20,14 +21,14 @@ const addHiddenClass = function () {
 let i = 0;
 for (i = 0; i < showModalButtonsList.length; i++) {
   showModalButtonsList[i].addEventListener('click', function () {
-    removeHiddenClass();
+    removeHiddenClass(); // displays modal content
   });
 }
 
 //** Attaching listner to close X button and adding hidden class to hide data
 
 closeButton.addEventListener('click', function () {
-  addHiddenClass();
+  addHiddenClass(); // Hides modal content
 });
 
 //** Attaching listener to Escape keyboard event and adding hidden class to hide data

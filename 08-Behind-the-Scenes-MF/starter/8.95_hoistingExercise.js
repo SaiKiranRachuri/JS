@@ -26,12 +26,15 @@ const funcExp = function (a, b) {
 //console.log(funcArrow(5, 5)); // Cannot access 'funcArrow' before initialization
 let funcArrow = (a, b) => a + b;
 
-//console.log(funcArrowSub(3, 1)); //funcArrowSub is not a function; undefined(3, 1)
+// console.log(funcArrowSub(3, 1)); //"funcArrowSub is not a function"; undefined(3, 1)
 var funcArrowSub = (a, b) => a - b;
 
 //==========Bug due to creating variable with var==============
 
-console.log(`IF CONDITION: ${!numberOfProducts}`);
+console.log(`IF CONDITION: ${!numberOfProducts}`); //!0 = true
+
+console.log(numberOfProducts); //Undefined
+
 if (!numberOfProducts) {
   emptyCart();
 }

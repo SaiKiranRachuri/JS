@@ -49,4 +49,4 @@ kiranCopy.calcAge = kiran.calcAge;
 kiranCopy.calcAge(); // When calcAge is borrowed from kiran object into kiranCopy the output expectation should be 2037 - this.year but this outputs 2017 - this.year due to the object that is being called here.
 
 const func = kiran.calcAge;
-func(); // Behaves like a normal function call of declaration/expresstion
+func(); // Behaves like a normal function call of declaration/expression

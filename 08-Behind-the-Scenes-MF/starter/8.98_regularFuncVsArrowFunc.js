@@ -32,7 +32,7 @@ const kiran = {
     console.log(this);
     console.log(this.firstName);
 
-    // Problem
+    // Problem;
     // const funcInsideAMethod = function () {
     //   console.log('This keyword inside a function inside method:');
     //   console.log(this);
@@ -48,7 +48,7 @@ const kiran = {
     // Solution 2: use arrow function
     const funcInsideAMethod = () => {
       console.log('This keyword inside a function inside method:'); // As arrow function borrows lexical scope
-      console.log(self);
+      console.log(this);
     };
 
     funcInsideAMethod();

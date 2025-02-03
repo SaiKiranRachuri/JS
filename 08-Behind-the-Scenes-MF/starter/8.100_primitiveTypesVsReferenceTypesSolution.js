@@ -18,6 +18,6 @@ const company2 = {
 };
 
 const company2AfterAlliance = Object.assign({}, company2); // It's a shadow copy works only on primitive types
-company2AfterAlliance.lastName = 'Reuters';
+company2AfterAlliance.employees = 'Reuters';
 
 console.log(company2, company2AfterAlliance);

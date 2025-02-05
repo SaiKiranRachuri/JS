@@ -22,8 +22,9 @@ const restaurant = {
 
 //restaurant.numGuests = 23;
 console.log(restaurant.numGuests ? restaurant.numGuests : 10);
+console.log(restaurant);
 
-console.log(restaurant.numGuests || 10);
+console.log(restaurant.numGuests || 12);
 
 console.log('===============AND=================');
 
@@ -32,8 +33,8 @@ console.log(true && 0);
 
 console.log(true && 'Kiran' && 1 && 0 && undefined);
 
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('Mushroom', 'Spinach', 'Onions');
-}
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('Mushroom', 'Spinach', 'Onions');
+// }
 
-restaurant.orderPizza && restaurant.orderPizza('Mushroom', 'Spinach', 'Onions');
+restaurant.orderPizza || restaurant.orderPizza('Mushroom', 'Spinach', 'Onions');

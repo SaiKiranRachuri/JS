@@ -7,6 +7,7 @@ const restaurant = {
 };
 
 restaurant.numGuests = 0;
+restaurant.numGuests = undefined;
 const guests = restaurant.numGuests || 10; // This returns 10 even if above statement doesn't exist
 console.log(guests);
 

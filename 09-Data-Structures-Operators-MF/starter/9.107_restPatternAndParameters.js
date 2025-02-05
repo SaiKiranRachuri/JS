@@ -57,7 +57,7 @@ add([2, 3], 4, 5);
 
 // Functions; pass packed array as parameter to funtion
 const x = [2, 3, 4, 5];
-add(...x);
+add(...x); //Spreading: Unpack
 
 // Method in object and order pizza
 restaurant.orderPizza('chicken', 'onions', 'bell peppers');

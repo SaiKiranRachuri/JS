@@ -66,3 +66,5 @@ openingHours = {
     close: 24,
   },
 };
+
+console.log(openingHours);

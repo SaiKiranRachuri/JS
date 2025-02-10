@@ -9,7 +9,7 @@ const question = new Map([
   [false, 'Incorrect 😞'],
 ]); // Array of arrays is same as output from Object.entries() method.
 
-console.log(question);
+console.log(question); // Just displays data in {}, doesn't mean it is object.
 
 // Convert Objects to map
 const openingHours = {

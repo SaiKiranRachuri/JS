@@ -14,6 +14,7 @@ restMap
   .set(true, 'We are open.')
   .set(false, 'We are closed.');
 
+console.log('Restaurant Map:');
 console.log(restMap);
 
 // get method
@@ -50,11 +51,11 @@ console.log(arrayMap);
 console.log(arrayMap.get([1, 2]));
 
 //    Solution
-const arrayMapS = new Map();
+const arrayMaps = new Map();
 const arr = [1, 2];
-arrayMap.set(arr, 'Array is my Key');
-console.log(arrayMap);
-console.log(arrayMap.get(arr));
+arrayMaps.set(arr, 'Array is my Key');
+console.log(arrayMaps);
+console.log(arrayMaps.get(arr));
 
 // rest.Set(document............)
 restMap.set(document.querySelector('h1'), 'Heading');

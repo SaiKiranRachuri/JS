@@ -12,6 +12,8 @@ console.log(myString.length);
 // Length of string itself
 console.log('SAIKIRAN'.length);
 
+console.log('Indeces methods:');
+
 // Methods: indexOf(), lastIndexOf()
 const airline = 'TAP AIR PORTUGAL';
 console.log(airline.indexOf('R'));

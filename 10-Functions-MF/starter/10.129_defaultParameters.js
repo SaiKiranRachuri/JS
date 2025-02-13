@@ -16,9 +16,10 @@ const airplane = function (
     price,
   };
   bookings.push(booking);
-  console.log(bookings);
 };
 
 airplane('H123');
-airplane('H123', 1100);
+airplane('H123', 20);
 airplane('H123', undefined, 1100);
+
+console.log(bookings);

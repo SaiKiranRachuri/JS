@@ -31,4 +31,4 @@ const high5 = function () {
 document.body.addEventListener('click', high5); //Click on the body
 
 // foreach() in arrays: call backs all the time....
-['Kiran', 'Jonas', 'Sai'].forEach(high5);
+['Kiran', 'Jonas', 3].forEach(high5);

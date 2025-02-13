@@ -7,20 +7,20 @@ const Kiran = {
 };
 
 const checkIn = function (fNum, passenger) {
-  //   fNum = 'H456';
-  //   passenger.passportNum = 1234567;
+  fNum = 'H456';
+  passenger.passportNum = 1234567;
 
   if (passenger.passportNum === 5346789) {
     alert('Checked In.');
   } else {
     alert('Wrong passport.');
   }
-  console.log(passenger);
+  // console.log(passenger);
 };
 
-// checkIn(flightNum, Kiran);
-// console.log(flightNum);
-// console.log(Kiran); // PassportNum changes as Kiran is an object(reference type)
+checkIn(flightNum, Kiran);
+console.log(flightNum);
+console.log(Kiran.passportNum); // PassportNum changes as Kiran is an object(reference type)
 
 // Above is same as doing.....
 // const fNum = flightNum; // Same like copy; doesn't has affect on original data

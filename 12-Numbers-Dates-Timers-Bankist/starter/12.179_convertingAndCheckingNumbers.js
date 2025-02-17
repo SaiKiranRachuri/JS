@@ -5,7 +5,7 @@
 // BANKIST APP
 
 /////////////////////////////////////////////////
-// Data
+// New Data for this lecture
 
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
@@ -164,7 +164,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -251,3 +251,38 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+// 1) Any number in JS is stored as a floating point or decimal number
+console.log(20 === 20.0); // true
+
+// 2) Error in JS: 0.1 + 0.2 is NOT equal to 0.3
+console.log(0.1 + 0.2); // 0.3000000xx
+console.log(0.1 + 0.2 === 0.3);
+false;
+
+// 3) Convert string to number using +
+console.log(Number('20')); // 20
+console.log(Number('abc')); // NaN
+console.log(+'20'); // 20
+
+// 4) Parsing and limitations in parsing; Number.parseInt()
+console.log(Number.parseInt('20rem')); // 20
+console.log(Number.parseInt('x20px')); // NaN: limitation
+
+// 5) Second paramater in parseInt()
+console.log(Number.parseInt(' 20px ', 10)); // 20
+
+// 6) parseFloat()
+console.log(Number.parseFloat('1.2px', 10)); // 1.2
+
+// 7) isNaN() : 20, '20', +'20x', 1/0
+console.log(Number.isNaN(20)); // false
+console.log(Number.isNaN('20')); // false
+console.log(Number.isNaN(+'20x')); // false
+
+console.log(Number.isNaN(23 / 0));
+
+// 8) isFinite() to handle 1/0 case as well
+console.log(Number.isFinite(23 / 0));
+
+// 9) isInteger()
+console.log(Number.isInteger(0.1));

@@ -80,14 +80,20 @@ const displayMovements = function (acc, sort = false) {
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
+    const movDate = new Date(acc.movementsDates[i]);
+    const date = `${movDate.getDate()}`;
+    const month = `${movDate.getMonth() + 1}`;
+    
     const html = `
         <div class="movements__row">
           <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div> 
+    
+          <div class ="movements__date">${date.padStart(2, 0)}/${month.padStart(2, 0)}/${movDate.getFullYear()}</div>
 
-    <div class ="movements__date">${new Date()}</div>
           <div class="movements__value">${mov}€</div>
+          
         </div>
       `;
 
@@ -150,21 +156,21 @@ let currentAccount;
 
 // To fake login
 
-currentAccount = account1;
-console.log(currentAccount);
-containerApp.style.opacity = 100;
-updateUI(currentAccount);
+// currentAccount = account1;
+// console.log(currentAccount);
+// containerApp.style.opacity = 100;
+// updateUI(currentAccount);
 
 // DD/MM/YYYY HH:MM
-const now = new Date();
-const date = `${now.getDate()}`;
-const month = `${now.getMonth() + 1}`;
-const hours = `${now.getHours()}`;
-const minutes = `${now.getMinutes()}`;
-labelDate.textContent = `${date.padStart(2, 0)}/${month.padStart(
-  2,
-  0
-)}/${now.getFullYear()}, ${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}`;
+// const now = new Date();
+// const date = `${now.getDate()}`;
+// const month = `${now.getMonth() + 1}`;
+// const hours = `${now.getHours()}`;
+// const minutes = `${now.getMinutes()}`;
+// labelDate.textContent = `${date.padStart(2, 0)}/${month.padStart(
+//   2,
+//   0
+// )}/${now.getFullYear()}, ${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}`;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -180,6 +186,15 @@ btnLogin.addEventListener('click', function (e) {
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
+    const now = new Date();
+    const date = `${now.getDate()}`;
+    const month = `${now.getMonth() + 1}`;
+    const hours = `${now.getHours()}`;
+    const minutes = `${now.getMinutes()}`;
+    labelDate.textContent = `${date.padStart(2, 0)}/${month.padStart(
+      2,
+      0
+    )}/${now.getFullYear()}, ${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}`;
     containerApp.style.opacity = 100;
 
     // Clear input fields
@@ -209,6 +224,9 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    currentAccount.movementsDates.push(new Date());
+    receiverAcc.movementsDates.push(new Date());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -222,6 +240,8 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
+    
+    currentAccount.movementsDates.push(new Date().toISOString());
 
     // Update UI
     updateUI(currentAccount);

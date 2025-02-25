@@ -1,3 +1,5 @@
+// As of now the sort button is sorting only the movements but not the dates
+
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -73,32 +75,45 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort
-    ? acc.movements.slice().sort((a, b) => a - b)
-    : acc.movements;
+  const combinedMovementsWithDates = acc.movements.map((mov, i) => ({
+    movement: mov,
+    date: acc.movementsDates.at(i),
+  }));
 
-  movs.forEach(function (mov, i) {
-    const type = mov > 0 ? 'deposit' : 'withdrawal';
+  //   console.log(combinedMovementsWithDates);
 
-    const movDate = new Date(acc.movementsDates[i]);
-    const date = `${movDate.getDate()}`;
+  if (sort) combinedMovementsWithDates.sort((a, b) => a.movement - b.movement);
+
+  //   const movs = sort
+  //     ? acc.movements.slice().sort((a, b) => a - b)
+  //     : acc.movements;
+
+  combinedMovementsWithDates.forEach(function (obj, i) {
+    console.log(obj);
+    const { movement, date } = obj;
+    const type = movement > 0 ? 'deposit' : 'withdrawal';
+    // console.log(movementDate);
+
+    const movDate = new Date(date);
+    // console.log(movDate);
+    const mDate = `${movDate.getDate()}`;
     const month = `${movDate.getMonth() + 1}`;
 
     const html = `
-        <div class="movements__row">
-          <div class="movements__type movements__type--${type}">${
+          <div class="movements__row">
+            <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div> 
-    
-          <div class ="movements__date">${date.padStart(2, 0)}/${month.padStart(
-      2,
-      0
-    )}/${movDate.getFullYear()}</div>
-
-          <div class="movements__value">${mov}€</div>
-          
-        </div>
-      `;
+      
+            <div class ="movements__date">${mDate.padStart(
+              2,
+              0
+            )}/${month.padStart(2, 0)}/${movDate.getFullYear()}</div>
+  
+            <div class="movements__value">${movement}€</div>
+            
+          </div>
+        `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });

@@ -22,8 +22,8 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
+    '2025-02-22T17:01:17.194Z',
+    '2025-02-28T23:36:17.929Z',
     '2025-02-26T10:51:36.790Z',
   ],
   currency: 'EUR',
@@ -43,7 +43,7 @@ const account2 = {
     '2020-01-25T14:18:46.235Z',
     '2020-02-05T16:33:06.386Z',
     '2020-04-10T14:43:26.374Z',
-    '2020-06-25T18:49:59.371Z',
+    '2020-06-24T18:49:59.371Z',
     '2020-07-26T12:01:20.894Z',
   ],
   currency: 'USD',
@@ -83,11 +83,28 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // Functions
 
 const formatMovementDates = function (date) {
+  
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date1 - date2) / (24 * 60 * 60 * 1000));
 
   const daysPassed = calcDaysPassed(new Date(), new Date(date));
-  //   console.log(daysPassed);
+  console.log(daysPassed);
+  if (daysPassed === 0) return "Today";
+  if (daysPassed === 1) return "Yesterday";
+  if (daysPassed === 2) return "Two days ago";
+  if (daysPassed === 3) return "Three days ago";
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  const movementDate= new Date(date);
+  // console.log(movementDate);
+  const ddDate = `${movementDate.getDate()}`.padStart(2, 0);
+  const mmDate = `${movementDate.getMonth() + 1}`.padStart(2, 0);
+  const yyDate = movementDate.getFullYear();
+  
+
+  return `${ddDate}/${mmDate}/${yyDate}`;
+  
+
 };
 
 const displayMovements = function (acc, sort = false) {
@@ -107,33 +124,48 @@ const displayMovements = function (acc, sort = false) {
   //     : acc.movements;
 
   combinedMovementsWithDates.forEach(function (obj, i) {
-    console.log(obj);
+    // console.log(obj);
     const { movement, date } = obj;
     const type = movement > 0 ? 'deposit' : 'withdrawal';
     // console.log(movementDate);
 
-    const movDate = new Date(date);
-    // console.log(movDate);
-    const mDate = `${movDate.getDate()}`;
-    const month = `${movDate.getMonth() + 1}`;
+    // const movDate = new Date(date);
+    // // console.log(movDate);
+    // const mDate = `${movDate.getDate()}`;
+    // const month = `${movDate.getMonth() + 1}`;
 
-    formatMovementDates(date);
+   
+
+    // const html = `
+    //         <div class="movements__row">
+    //           <div class="movements__type movements__type--${type}">${
+    //   i + 1
+    // } ${type}</div> 
+        
+    //           <div class ="movements__date">${mDate.padStart(
+    //             2,
+    //             0
+    //           )}/${month.padStart(2, 0)}/${movDate.getFullYear()}</div>
+    
+    //           <div class="movements__value">${movement}€</div>
+              
+    //         </div>
+    //       `;
+
+    const movDate = formatMovementDates(date);
 
     const html = `
-            <div class="movements__row">
-              <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div> 
-        
-              <div class ="movements__date">${mDate.padStart(
-                2,
-                0
-              )}/${month.padStart(2, 0)}/${movDate.getFullYear()}</div>
-    
-              <div class="movements__value">${movement}€</div>
-              
-            </div>
-          `;
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${
+i + 1
+} ${type}</div> 
+
+      <div class ="movements__date">${movDate}</div>
+
+      <div class="movements__value">${movement}€</div>
+      
+    </div>
+  `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });

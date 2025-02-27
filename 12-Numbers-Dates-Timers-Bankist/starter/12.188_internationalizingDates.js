@@ -1,14 +1,6 @@
-// moment.js is a free JS library which can be used for precise date calculations, covers change in timings, day light savings of regions.
+// Internationalization API in Javascript
 
-// 1) Create function to calculate the number of days passed between two dates
-
-// const calcDaysPassed = (date1, date2) =>
-//   Math.round(Math.abs(date1 - date2) / (24 * 60 * 60 * 1000));
-// console.log(calcDaysPassed(new Date(), new Date(2026, 1, 27)));
-// console.log(calcDaysPassed(new Date(), new Date(2026, 1, 27, 15, 20)));
-
-// 2) Days passed between current and previous dates: Implement in Bankist movements to display how many days passed for recent transactions: ex: 3 days ago.. posted yesterday in facebook.
-// As of now the sort button is sorting only the movements but not the dates
+// Refer ISO Language Codes in google from website lingoes
 
 const account1 = {
   owner: 'Jonas Schmedtmann',
@@ -27,7 +19,7 @@ const account1 = {
     '2025-02-26T10:51:36.790Z',
   ],
   currency: 'EUR',
-  locale: 'pt-PT', // de-DE
+  locale: 'en-AU', // de-DE
 };
 
 const account2 = {
@@ -82,27 +74,29 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const formatMovementDates = function (date) {
+const formatMovementDates = function (date, locale) {
   const calcDaysPassed = (date1, date2) => {
     console.log(`Date - Date2: ${date1 - date2}`);
     Math.round(Math.abs(date1 - date2) / (24 * 60 * 60 * 1000));
   };
 
   const daysPassed = calcDaysPassed(new Date(), new Date(date));
-  console.log(daysPassed);
+  // console.log(daysPassed);
   if (daysPassed === 0) return 'Today';
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed === 2) return 'Two days ago';
   if (daysPassed === 3) return 'Three days ago';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
 
-  const movementDate = new Date(date);
-  // console.log(movementDate);
-  const ddDate = `${movementDate.getDate()}`.padStart(2, 0);
-  const mmDate = `${movementDate.getMonth() + 1}`.padStart(2, 0);
-  const yyDate = movementDate.getFullYear();
+  // const movementDate = new Date(date);
+  // // console.log(movementDate);
+  // const ddDate = `${movementDate.getDate()}`.padStart(2, 0);
+  // const mmDate = `${movementDate.getMonth() + 1}`.padStart(2, 0);
+  // const yyDate = movementDate.getFullYear();
 
-  return `${ddDate}/${mmDate}/${yyDate}`;
+  console.log(locale);
+
+  return new Intl.DateTimeFormat(locale).format(new Date(date));
 };
 
 const displayMovements = function (acc, sort = false) {
@@ -148,20 +142,20 @@ const displayMovements = function (acc, sort = false) {
     //         </div>
     //       `;
 
-    const movDate = formatMovementDates(date);
+    const movDate = formatMovementDates(date, acc.locale);
 
     const html = `
-    <div class="movements__row">
-      <div class="movements__type movements__type--${type}">${
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div> 
-
-      <div class ="movements__date">${movDate}</div>
-
-      <div class="movements__value">${movement}€</div>
-      
-    </div>
-  `;
+  
+        <div class ="movements__date">${movDate}</div>
+  
+        <div class="movements__value">${movement}€</div>
+        
+      </div>
+    `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -252,15 +246,44 @@ btnLogin.addEventListener('click', function (e) {
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
+    // const now = new Date();
+    // const date = `${now.getDate()}`;
+    // const month = `${now.getMonth() + 1}`;
+    // const hours = `${now.getHours()}`;
+    // const minutes = `${now.getMinutes()}`;
+    // labelDate.textContent = `${date.padStart(2, 0)}/${month.padStart(
+    //   2,
+    //   0
+    // )}/${now.getFullYear()}, ${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}`;
+
+    let options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      // day: 'numeric',
+      // month: 'long', // numeric, long, short, 2-digit
+      // year: 'numeric', // 2-digit
+      // weekday: 'long', // short
+    };
+
+    // labelDate.textContent = new Intl.DateTimeFormat('en-UK', options).format(
+    //   now
+    // );
+
+    // Getting language from browser instead hard coding
+    // const locale = navigator.language;
+    // labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(
+    //   now
+    // );
+
+    // Displaying date as per the locale region from account object
     const now = new Date();
-    const date = `${now.getDate()}`;
-    const month = `${now.getMonth() + 1}`;
-    const hours = `${now.getHours()}`;
-    const minutes = `${now.getMinutes()}`;
-    labelDate.textContent = `${date.padStart(2, 0)}/${month.padStart(
-      2,
-      0
-    )}/${now.getFullYear()}, ${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}`;
+    console.log(now);
+    console.log(currentAccount.locale);
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
+
     containerApp.style.opacity = 100;
 
     // Clear input fields

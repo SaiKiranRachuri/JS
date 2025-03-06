@@ -37,7 +37,7 @@ message.innerHTML =
 firstHeaderInPage.prepend(message);
 // prepend adds as first child of firstHeaderInPage element
 // firstHeaderInPage.append(message); // adds as last child.
-// as this a live DOM append overrides prepend message and i.e, why the message doesn't both as first and last child.
+// as this a live DOM append overrides prepend message and i.e, why the message doesn't display both as first and last child.
 
 // To have element at multiple places
 // firstHeaderInPage.append(message.cloneNode(true));

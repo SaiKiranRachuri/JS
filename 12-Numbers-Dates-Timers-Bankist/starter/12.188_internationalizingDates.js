@@ -2,6 +2,11 @@
 
 // Refer ISO Language Codes in google from website lingoes
 
+// new Intl.DateTimeFormat(
+//   currentAccount.locale,
+//   options
+// ).format(now);
+
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -76,7 +81,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 const formatMovementDates = function (date, locale) {
   const calcDaysPassed = (date1, date2) => {
-    console.log(`Date - Date2: ${date1 - date2}`);
+    // console.log(`Date - Date2: ${date1 - date2}`);
     Math.round(Math.abs(date1 - date2) / (24 * 60 * 60 * 1000));
   };
 
@@ -259,11 +264,13 @@ btnLogin.addEventListener('click', function (e) {
     let options = {
       hour: 'numeric',
       minute: 'numeric',
-      // day: 'numeric',
-      // month: 'long', // numeric, long, short, 2-digit
-      // year: 'numeric', // 2-digit
+      day: 'numeric',
+      month: 'long', // numeric, long, short, 2-digit
+      year: 'numeric', // 2-digit
       // weekday: 'long', // short
     };
+
+    
 
     // labelDate.textContent = new Intl.DateTimeFormat('en-UK', options).format(
     //   now
@@ -278,7 +285,8 @@ btnLogin.addEventListener('click', function (e) {
     // Displaying date as per the locale region from account object
     const now = new Date();
     console.log(now);
-    console.log(currentAccount.locale);
+    // console.log(new Date(new Date().toLocaleString("en-AU", {timeZone: 'Australia/Adelaide'})));
+    
     labelDate.textContent = new Intl.DateTimeFormat(
       currentAccount.locale,
       options

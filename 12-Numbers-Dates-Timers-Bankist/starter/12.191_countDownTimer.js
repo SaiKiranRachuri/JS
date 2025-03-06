@@ -216,7 +216,7 @@ const updateUI = function (acc) {
 
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // To fake login
 
@@ -237,18 +237,24 @@ let currentAccount;
 // )}/${now.getFullYear()}, ${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}`;
 
 const countDownTimer = function () {
-  let time = 10;
-  let minutes = String(Math.trunc(time / 60)).padStart(2, 0);
-  let seconds = String(time % 60).padStart(2, 0);
-
-  setInterval(() => {
-    labelTimer.textContent = `${minutes}:${seconds}`;
-    time--;
-    if (seconds <= 0) {
+  let time = 60;
+    timer = setInterval(() => {
+    --time; // To start timer at zeroth second instead of 1000
+    
+    labelTimer.textContent = `${String(Math.trunc(time / 60)).padStart(2, 0)}:${String(time % 60).padStart(2, 0)}`;
+    
+    if (time <= 0) {
       // Hide UI
       containerApp.style.opacity = 0;
+      clearInterval(timer); 
+      // When relogged IN this allows the time to restart instead resuming from previous session
+      labelWelcome.textContent = "Log in to get started!"
+      currentAccount = null;
     }
   }, 1000);
+  labelTimer.textContent = `${String(Math.trunc(time / 60)).padStart(2, 0)}:${String(time % 60).padStart(2, 0)}`;
+  // Asynchronous execution. Executes this line at zeroth second.
+  
 };
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -302,6 +308,8 @@ btnLogin.addEventListener('click', function (e) {
       options
     ).format(now);
 
+    clearInterval(timer); 
+    // To clear existing timer to prevent timer interfering when logging IN to different user before current user timer completes.
     countDownTimer();
     containerApp.style.opacity = 100;
 
@@ -337,6 +345,12 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    clearInterval(timer); 
+    countDownTimer();
+    // Resetting timer when user is active i.e., made transfer operation
+
+   
   }
 });
 
@@ -353,6 +367,10 @@ btnLoan.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+    
+    clearInterval(timer); 
+    countDownTimer();
+    // Resetting timer when user is active i.e., made requested for loan
   }
   inputLoanAmount.value = '';
 });

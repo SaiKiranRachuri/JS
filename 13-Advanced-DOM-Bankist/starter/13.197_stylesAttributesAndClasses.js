@@ -24,6 +24,7 @@ console.log(parseFloat(getComputedStyle(message).height) + 40 + 'px');
 // :root {
 //     --color-primary: #5ec576;
 //   }
+// document.documentElement : is the root
 document.documentElement.style.setProperty('--color-primary', 'orangered');
 
 ////// Accessing Standard attributes and non-standard attributes

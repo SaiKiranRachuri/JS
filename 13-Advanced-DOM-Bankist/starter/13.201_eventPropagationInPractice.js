@@ -24,9 +24,9 @@ const randomColor = () =>
 document.querySelector('.nav__link').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   // this refers to current class
-  console.log('Target initiated from:', e.target);
+  // console.log('Target initiated from:', e.target);
   console.log('Child:', e.currentTarget);
-  console.log(this === e.currentTarget); // returns true
+  // console.log(this === e.currentTarget); // returns true
 
   // stop propagation
   // e.stopPropagation();
@@ -35,7 +35,7 @@ document.querySelector('.nav__link').addEventListener('click', function (e) {
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   // this refers to current class
-  console.log('Target initiated from:', e.target);
+  // console.log('Target initiated from:', e.target);
   console.log('Parent:', e.currentTarget);
 });
 
@@ -44,8 +44,9 @@ document.querySelector('.nav').addEventListener(
   function (e) {
     this.style.backgroundColor = randomColor();
     // this refers to current class
-    console.log('Target initiated from:', e.target);
+    // console.log('Target initiated from:', e.target);
     console.log('Ultimate parent:', e.currentTarget);
-  },
-  true
+  }, true
+  
 ); // To capture the target while traversing form capturing phase to target phase use true as parameter here.
+   // Remove true to capture at bubbling phase. Default phase.

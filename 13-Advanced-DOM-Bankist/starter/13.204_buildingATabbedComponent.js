@@ -9,6 +9,7 @@ tabContainer.addEventListener('click', function (e) {
   //   console.log(clicked);
 
   if (!clicked) return;
+  // CLicking in between tabs.
 
   tabs.forEach(function (tab) {
     tab.classList.remove('operations__tab--active');

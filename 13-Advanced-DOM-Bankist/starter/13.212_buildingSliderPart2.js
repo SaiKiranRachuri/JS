@@ -3,6 +3,7 @@ const slides = document.querySelectorAll('.slide');
 const slider = document.querySelector('.slider');
 const sliderBtnRight = document.querySelector('.slider__btn--right');
 const sliderBtnLeft = document.querySelector('.slider__btn--left');
+const dotContainer = document.querySelector('.dots');
 
 
 
@@ -18,13 +19,13 @@ const goToSlide = function (currentSlide) {
 goToSlide(0);
 // First slide: 0%, 100%, 200%, 300%
 
-const dotContainer = document.querySelector('dots');
+
+
 
 // Create dots
 const createDots = function(){
-  console.log("dot container:");
-  console.log(dotContainer);
-  slides.forEach((slide, index) => dotContainer.insertAdjacentHTML('beforeend', `<button class = "dots__dot" data-slide = ${index}></button>` ));
+ 
+  slides.forEach((_, index) => dotContainer.insertAdjacentHTML('beforeend', `<button class = "dots__dot" data-slide = ${index}></button>` ));
 }
 createDots();
 
@@ -34,8 +35,8 @@ const activateDot = function(currentSlide){
 }
 activateDot(0);
 
-slider.style.transform = 'scale(0.5)';
-slider.style.overflow = 'visible';
+// slider.style.transform = 'scale(0.5)';
+// slider.style.overflow = 'visible';
 
 const nextSlide = function () {
   if (currentSlide === slides.length - 1) {

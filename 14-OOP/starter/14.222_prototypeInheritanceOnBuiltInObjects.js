@@ -49,3 +49,31 @@ console.log(kiran.species);
 
 console.log(kiran.hasOwnProperty('firstName')); //true
 console.log(kiran.hasOwnProperty('species')); //false
+
+console.log(`Kiran's prototype: `, kiran.__proto__); // constructor function
+console.log(`Person prototype:`, Person.prototype); // constructor function
+
+console.log(kiran.__proto__.__proto__); // object: Person's proto of proto
+console.log(kiran.__proto__.__proto__.__proto__); // null refer to images 14.221
+
+console.dir(Person.prototype.constructor); // constructor function
+
+const arr = [2, 4, 5, 4];
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype); // true
+console.log(arr.__proto__.__proto__); // object
+console.log(arr.__proto__.__proto__.__proto__); // null
+
+// adding a method to array prototype
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+// Bad practise as JS may be implement other functionality with same name and also other dev's might create the same functionality with different names.
+
+console.log(arr.unique());
+
+const h1 = document.querySelector('h1');
+console.log(h1);
+console.dir(h1); // observe its prototypes
+
+console.dir(x => x + 1); // Function is also an object. Observe its prototypes and inherited methods.

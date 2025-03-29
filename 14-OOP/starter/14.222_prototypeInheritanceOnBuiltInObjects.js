@@ -74,6 +74,6 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.log(h1);
-console.dir(h1); // observe its prototypes
+console.dir(h1); // observe its prototypes: 13.195 image
 
 console.dir(x => x + 1); // Function is also an object. Observe its prototypes and inherited methods.

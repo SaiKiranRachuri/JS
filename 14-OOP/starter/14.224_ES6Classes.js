@@ -1,32 +1,28 @@
 // Classes are a special type of functions so we can create classes using class declaration and expression like we did in functions
 
-
 // class expression
 // class PersonCl = class {
 
 // }
 
-
-
 // Class declaration
-class PersonCl  {
-    constructor(firstName, birthYear){
-        this.firstName = firstName;
-        this.birthYear = birthYear;
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
 
-    }
+  // Methods are added to prototype property(PersonCl)
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
 
-    // Methods are added to prototype property(PersonCl)
-    calcAge(){
-        console.log(2037 - this.birthYear);
-    }
-
-    greet(){
-        console.log(`Hey ${this.firstName}!`);
-    }
+  greet() {
+    console.log(`Hey ${this.firstName}!`);
+  }
 }
 
-const jessica = new PersonCl("Jessica", 1997);
+const jessica = new PersonCl('Jessica', 1997);
 console.log(jessica.__proto__ === PersonCl.prototype); // true
 
 // PersonCl.prototype.greet = function(){

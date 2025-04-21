@@ -11,59 +11,48 @@ DATA CAR 1: 'Ford' going at 120 km/h
 GOOD LUCK 😀
 */
 
-
-
 // Using classes
 class Car {
-    constructor(make, speed){
-        this.make = make;
-        this.speed = speed;
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
 
-    }
+  // Methods are added to prototype property(PersonCl)
+  accelerate() {
+    this.speed += 5;
+    console.log(`${this.make} is moving with a speed of ${this.speed}`);
+  }
 
-    // Methods are added to prototype property(PersonCl)
-    accelerate(){
-        this.speed += 5;
-        console.log(`${this.make} is moving with a speed of ${this.speed}`);
-    }
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is moving with a speed of ${this.speed}`);
+  }
 
-    brake(){
-        this.speed -= 5;
-        console.log(`${this.make} is moving with a speed of ${this.speed}`);
+  get speedUS() {
+    this.speed /= 1.6;
+    console.log(`${this.make} is moving with a speed of ${this.speed} mi/h.`);
+  }
 
-    }
-
-    get speedUS(){
-        this.speed /= 1.6;
-        console.log(`${this.make} is moving with a speed of ${this.speed} mi/h.`);
-
-
-    }
-
-    set speedUS(){
-        
-    }
-
-    
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
 }
 
-const ford = new Car("Ford", 90);
+const ford = new Car('Ford', 90);
 ford.accelerate();
 ford.brake();
-
 ford.speedUS;
 
-
-
-
-
+ford.speedUS = 50; // Use the property name
+ford.speedUS;
 
 // Using Object.create
 // const CarProto = {
 //     accelerate(){
 //         this.speed += 5;
 //         console.log(`${this.make} is going at a speed of ${this.speed}`);
-        
+
 //     },
 
 //     brake(speed){

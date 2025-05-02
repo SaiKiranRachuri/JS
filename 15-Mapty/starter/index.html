@@ -13,7 +13,21 @@
 
     <link rel="stylesheet" href="style.css" />
 
-    <script defer src="15.243_geolocationAPI.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script defer src="other.js"></script>
+    <script defer src="15.245_displayingMapUsingLeafletLibrary.js"></script>
+    <!-- defer matters here because the order of execution matters. Firstly Leaflet map library is loaded and then our script access it-->
     <title>mapty // Map your workouts</title>
   </head>
   <body>

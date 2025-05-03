@@ -50,7 +50,20 @@ if (navigator.geolocation) {
         console.log(mapEvent);
         const { lat, lng } = mapEvent.latlng;
         console.log(lat, lng);
-        L.marker([lat, lng]).addTo(map).bindPopup('GYM').openPopup();
+        // L.marker([lat, lng]).addTo(map).bindPopup('GYM').openPopup();
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup(
+            L.popup({
+              maxWidth: 100,
+              minWidth: 100,
+              autoClose: false,
+              closeOnClick: false,
+              className: 'running-popup',
+            })
+          )
+          .setPopupContent('GYM')
+          .openPopup();
       });
       // on is method from Leaflet browser API. A inherited method from other classes
     },

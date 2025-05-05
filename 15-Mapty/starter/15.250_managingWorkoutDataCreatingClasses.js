@@ -1,12 +1,3 @@
-// 1) Add class with empty methods from architecture diagram
-// 2) Update position and load map methods
-// 3) Create object and get the position
-// 4) Update the constructor to get position without calling the get position method explicitly
-// 5) Move event listeners in class
-
-///// In a regular function call "this" keyword refers to undefined.
-///// "this" keyword inside an event(listener) refers to DOM element NOT the object
-
 'use strict';
 
 // prettier-ignore
@@ -20,6 +11,47 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+class Workout {
+  date = new Date();
+  id = (Date.now() + '').slice(-10);
+  constructor(coords, distance, duration) {
+    this.coords = coords;
+    this.distance = distance;
+    this.duration = duration;
+  }
+}
+
+class Running extends Workout {
+  constructor(coords, distance, duration, cadence) {
+    super(coords, distance, duration);
+    this.cadence = cadence;
+    this.calcPace();
+  }
+
+  calcPace() {
+    this.pace = this.duration / this.distance;
+    return this.pace;
+  }
+}
+
+class Cycling extends Workout {
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration);
+    this.elevationGain = elevationGain;
+  }
+
+  calcSpeed() {
+    this.speed = this.distance / this.duration;
+    return this.speed;
+  }
+}
+
+// const running = new Running([22, -19], 5, 120, 200);
+// const cycling = new Cycling([22, -19], 5, 120, 200);
+// console.log(running, cycling);
+
+/////////////////////////////
+// APPLICATION ARCHITECTURE
 class App {
   #map;
   #mapEvent;

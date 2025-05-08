@@ -1,15 +1,6 @@
-// Get data from form
-// Check if data is valid
-// If workout is running, creating running object
-// If workout is cycling, create cycling object
-// Render workout on map as marker
-// Add the workout to list
-// Hide the form and clear input fields
+// Render the workout name with details on marker
 
 'use strict';
-
-// prettier-ignore
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
@@ -27,6 +18,14 @@ class Workout {
     this.distance = distance;
     this.duration = duration;
   }
+
+  _setDescription() {
+    // prettier-ignore
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.description = `${this.type[0].toUpperCase() + this.type.slice(1)} on ${
+      months[this.date.getMonth()]
+    } ${this.date.getDate()}`;
+  }
 }
 
 class Running extends Workout {
@@ -36,6 +35,7 @@ class Running extends Workout {
     this.cadence = cadence;
     // this.type = "running";
     this.calcPace();
+    this._setDescription();
   }
 
   calcPace() {
@@ -50,6 +50,7 @@ class Cycling extends Workout {
     super(coords, distance, duration);
     this.elevationGain = elevationGain;
     this.type = 'cycling';
+    this._setDescription();
   }
 
   calcSpeed() {
@@ -68,6 +69,7 @@ class App {
   #map;
   #mapEvent;
   #workouts = [];
+  #mapZoomLevel = 13;
 
   constructor() {
     this._getPosition();
@@ -75,6 +77,8 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
 
     inputType.addEventListener('change', this._toggleElevationField);
+
+    containerWorkouts.addEventListener('click', this._moveToPopUp.bind(this));
   }
 
   _getPosition() {
@@ -97,7 +101,7 @@ class App {
 
     const coords = [latitude, longitude];
 
-    this.#map = L.map('map').setView(coords, 13);
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
     // In a regular function call "this" keyword refers to undefined. So bind the object to the function: line 33
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -170,20 +174,24 @@ class App {
     console.log('Workout:', workout);
 
     // Render workout on map as marker
-    this.renderWorkoutOnMap(workout);
+    this._renderWorkoutOnMap(workout);
 
     // Add the workout to list
+    this._renderWorkout(workout);
 
     // Hide the form and clear input fields
-
-    ///// Clearing input fields
-    inputDistance.value =
-      inputCadence.value =
-      inputDuration.value =
-      inputElevation.value =
-        '';
+    this._hideForm();
   }
-  renderWorkoutOnMap(workout) {
+
+  _hideForm() {
+    ///// Clearing input fields
+    inputCadence.value = inputDuration.value = inputElevation.value = '';
+    form.style.display = 'none';
+    form.classList.add('hidden');
+    setTimeout(() => (form.style.display = 'grid'), 1000);
+    // Hide form and replace it with workout instead of having a animation of moving the workout on to form.
+  }
+  _renderWorkoutOnMap(workout) {
     console.log('Render workout on map:', workout);
     L.marker(workout.coords)
       .addTo(this.#map)
@@ -196,8 +204,81 @@ class App {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(`${workout.type}`)
+      .setPopupContent(
+        `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'}${workout.description}`
+      )
       .openPopup();
+  }
+
+  _renderWorkout(workout) {
+    let html = `<li class="workout workout--${workout.type}" data-id="${
+      workout.id
+    }">
+          <h2 class="workout__title">${workout.description}</h2>
+          <div class="workout__details">
+            <span class="workout__icon">${
+              workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
+            } </span>
+            <span class="workout__value">${workout.distance}</span>
+            <span class="workout__unit">km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⏱</span>
+            <span class="workout__value">${workout.duration}</span>
+            <span class="workout__unit">min</span>
+          </div>
+          `;
+
+    if (workout.type === 'running') {
+      html += `<div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">${workout.cadence}</span>
+            <span class="workout__unit">min/km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">🦶🏼</span>
+            <span class="workout__value">${workout.pace}</span>
+            <span class="workout__unit">spm</span>
+          </div>
+          `;
+    }
+    if (workout.type === 'cycling') {
+      html += `
+        <div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">${workout.elevationGain}</span>
+            <span class="workout__unit">km/h</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⛰</span>
+            <span class="workout__value">${workout.speed}</span>
+            <span class="workout__unit">m</span>
+          </div>
+          `;
+    }
+    form.insertAdjacentHTML('afterend', html);
+  }
+
+  _moveToPopUp(e) {
+    const workoutEl = e.target.closest('.workout');
+    // Target is to know which workout is clicked.
+    // Closest is where ever the click happend on the workout it finds the parent of it. (which is the li element)
+    console.log(workoutEl);
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+    // Get the clicked workout object from workouts array.
+    console.log(workout);
+
+    if (!workoutEl) return;
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
   }
 }
 

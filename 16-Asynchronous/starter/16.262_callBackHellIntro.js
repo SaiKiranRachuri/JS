@@ -50,7 +50,9 @@ const getCountriesAndNeighbours = function (country) {
 
     renderCountry(data);
 
-    const [neighbours] = data.borders;
+    const neighbours = data[0].borders[0];
+    if (!neighbours) return;
+
     const request2 = new XMLHttpRequest();
     request2.open(
       'GET',

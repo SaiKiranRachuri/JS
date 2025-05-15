@@ -1,8 +1,8 @@
-// Suppose if user tries to access a country that is not present in API then it returns fetch method returns an 404 status: line 37 the error is captured at catch method.
+// Suppose if user tries to access a country that is not present in API then it returns fetch method returns an 404 status: line 37 the error is captured at catch method.(propagates and captured)
 
 // However, if neighbouring country is not present then the error has to be handled at neighbouring fetch method when violates DRY.
 
-// May be create a function for getJson() with url and message
+// May be create a function for getJson() with url and message params
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
